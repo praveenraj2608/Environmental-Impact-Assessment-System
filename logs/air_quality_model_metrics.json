@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-07-12T15:20:49.614126",
+  "target_col": "CO(GT)",
+  "best_model": "Random Forest",
+  "xgb_metrics": {
+    "rmse": 0.5383,
+    "mae": 0.358,
+    "r2": 0.8443,
+    "mape": 28.61
+  },
+  "rf_metrics": {
+    "rmse": 0.5329,
+    "mae": 0.3456,
+    "r2": 0.8474,
+    "mape": 26.89
+  },
+  "best_metrics": {
+    "rmse": 0.5329,
+    "mae": 0.3456,
+    "r2": 0.8474,
+    "mape": 26.89
+  },
+  "n_features": 24,
+  "train_size": 2858,
+  "test_size": 715
+}

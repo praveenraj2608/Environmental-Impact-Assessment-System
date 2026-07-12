@@ -1,0 +1,36 @@
+{
+  "target_col": "CO(GT)",
+  "feature_names": [
+    "PT08.S1(CO)",
+    "NMHC(GT)",
+    "C6H6(GT)",
+    "PT08.S2(NMHC)",
+    "NOx(GT)",
+    "PT08.S3(NOx)",
+    "NO2(GT)",
+    "PT08.S4(NO2)",
+    "PT08.S5(O3)",
+    "T",
+    "RH",
+    "AH",
+    "CO(GT)_lag_1",
+    "CO(GT)_lag_7",
+    "CO(GT)_lag_24",
+    "CO(GT)_roll_mean_24",
+    "CO(GT)_roll_max_24",
+    "CO(GT)_roll_min_24",
+    "CO(GT)_roll_mean_168",
+    "CO(GT)_roll_max_168",
+    "CO(GT)_roll_min_168",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "best_model_name": "Random Forest",
+  "metrics": {
+    "rmse": 0.5329,
+    "mae": 0.3456,
+    "r2": 0.8474,
+    "mape": 26.89
+  }
+}

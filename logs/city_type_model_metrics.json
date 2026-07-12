@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-07-12T15:19:14.037980",
+  "model": "RandomForestClassifier",
+  "best_params": {
+    "n_estimators": 200,
+    "min_samples_split": 2,
+    "min_samples_leaf": 1,
+    "max_features": "log2",
+    "max_depth": 30
+  },
+  "cv_accuracy_mean": 0.9875,
+  "cv_accuracy_std": 0.0012,
+  "test_accuracy": 0.9899,
+  "test_f1_weighted": 0.9899,
+  "test_roc_auc": 0.9992,
+  "feature_importance": [
+    {
+      "feature": "SO2",
+      "importance": 0.4467091387437092
+    },
+    {
+      "feature": "PM2.5",
+      "importance": 0.22795525085795515
+    },
+    {
+      "feature": "PM10",
+      "importance": 0.16435084833884323
+    },
+    {
+      "feature": "CO",
+      "importance": 0.0904592565809261
+    },
+    {
+      "feature": "NO2",
+      "importance": 0.04933110255568594
+    },
+    {
+      "feature": "O3",
+      "importance": 0.021194402922880204
+    }
+  ]
+}

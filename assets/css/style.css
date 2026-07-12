@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #00d4aa;
+    --secondary: #7c3aed;
+    --accent: #f59e0b;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --warning: #f97316;
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --text-light: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: rgba(148,163,184,0.15);
+}
+
+/* Global resets */
+html, body, [class*="css"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Main container background */
+.main .block-container {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    min-height: 100vh;
+    padding-top: 1rem;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    border-right: 1px solid var(--border);
+}
+
+/* Cards */
+.metric-card {
+    background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(30,41,59,0.7));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 212, 170, 0.15);
+}
+
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.metric-label {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+}
+
+/* Page headers */
+.page-header {
+    background: linear-gradient(135deg, rgba(0,212,170,0.1), rgba(124,58,237,0.1));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.page-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Prediction badges */
+.prediction-badge {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.badge-industrial {
+    background: linear-gradient(135deg, #dc2626, #7c3aed);
+    color: white;
+    box-shadow: 0 0 30px rgba(220,38,38,0.4);
+}
+
+.badge-residential {
+    background: linear-gradient(135deg, #22c55e, #00d4aa);
+    color: #0f172a;
+    box-shadow: 0 0 30px rgba(34,197,94,0.4);
+}
+
+/* Risk level colors */
+.risk-safe { color: #22c55e; }
+.risk-caution { color: #eab308; }
+.risk-alert { color: #f97316; }
+.risk-critical { color: #ef4444; }
+
+/* Health disclaimer */
+.health-disclaimer {
+    background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(249,115,22,0.1));
+    border: 2px solid rgba(239,68,68,0.5);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+/* Info boxes */
+.info-box {
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.3);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+}
+
+/* Streamlit overrides */
+.stButton > button {
+    background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    padding: 0.75rem 2rem !important;
+    transition: all 0.3s ease !important;
+    width: 100%;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 25px rgba(0, 212, 170, 0.4) !important;
+}
+
+/* Metric delta text */
+[data-testid="stMetricValue"] {
+    color: var(--primary) !important;
+}
+
+/* Divider */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 2rem 0;
+}
+
+/* Success / error messages */
+.stSuccess { border-radius: 12px !important; }
+.stError { border-radius: 12px !important; }
+.stWarning { border-radius: 12px !important; }
+.stInfo { border-radius: 12px !important; }
