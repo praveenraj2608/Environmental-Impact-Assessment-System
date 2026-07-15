@@ -46,3 +46,6 @@ Thumbs.db
 
 # Data (may be large)
 # data/*.csv  # Uncomment if datasets are large/sensitive
+
+# RAG Data
+vector_db/

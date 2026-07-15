@@ -211,6 +211,44 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+    # ─── AI Consultant status ─────────────────────────────────────────────────
+    st.markdown('<div class="sidebar-section-label">🤖 AI Consultant</div>', unsafe_allow_html=True)
+    try:
+        import requests as _req
+        ollama_ok = False
+        try:
+            _r = _req.get("http://localhost:11434/api/tags", timeout=2)
+            ollama_ok = _r.status_code == 200
+        except Exception:
+            pass
+
+        from rag.config import VECTOR_DB_DIR, HASH_CACHE_FILE
+        vector_ok = HASH_CACHE_FILE.exists() and VECTOR_DB_DIR.exists()
+
+        dot_o = "dot-ready"  if ollama_ok  else "dot-missing"
+        dot_v = "dot-ready"  if vector_ok  else "dot-warn"
+        lbl_o = "Ollama ready"    if ollama_ok  else "Ollama offline"
+        lbl_v = "Index built"     if vector_ok  else "Index not built"
+
+        for dot_cls, label in [(dot_o, f"LLM: {lbl_o}"), (dot_v, f"KB: {lbl_v}")]:
+            st.markdown(f"""
+            <div class="status-pill">
+                <span class="{dot_cls}"></span>
+                <span class="pill-name">{label}</span>
+            </div>""", unsafe_allow_html=True)
+    except Exception:
+        st.markdown("""
+        <div class="status-pill">
+            <span class="dot-warn"></span>
+            <span class="pill-name">RAG not installed</span>
+        </div>""", unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="sidebar-footer">
+        &nbsp;
+    </div>
+    """, unsafe_allow_html=True)
+
 
 
 

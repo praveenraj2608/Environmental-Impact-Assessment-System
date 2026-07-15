@@ -13,3 +13,9 @@ scipy>=1.12.0
 seaborn>=0.12.2
 torch>=2.0.0
 tensorflow>=2.16.0
+
+# ── RAG dependencies ──────────────────────────────────────────────────────────
+sentence-transformers>=2.7.0
+chromadb>=0.5.0
+PyMuPDF>=1.24.0
+python-docx>=1.1.0
