@@ -1,0 +1,2 @@
+Model,Type,Accuracy,Precision,Recall,F1 (Weighted),ROC AUC,CV Mean,CV Std,Train Time (s),Predict Time (s)
+Random Forest,ML,0.9647,0.9558,0.9647,0.957,0.9283,0.9561,0.0039,0.2533,0.052736

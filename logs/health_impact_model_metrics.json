@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-07-12T15:46:18.904560",
-  "best_model": "XGBoost",
+  "timestamp": "2026-07-15T11:48:25.557686",
+  "best_model": "Random Forest",
   "class_labels": [
     "High",
     "Low",
@@ -11,35 +11,134 @@
   "comparison": [
     {
       "model_name": "Logistic Regression",
-      "accuracy": 0.9372,
-      "f1_weighted": 0.9223,
-      "roc_auc": 0.8937,
-      "cv_mean": 0.937,
-      "cv_std": 0.0049
+      "accuracy": 0.945,
+      "f1_weighted": 0.9312,
+      "precision_weighted": 0.9193,
+      "recall_weighted": 0.945,
+      "roc_auc": 0.9111,
+      "train_time": 0.0426,
+      "predict_time": 0.000276,
+      "cv_mean": 0.932,
+      "cv_std": 0.0073
     },
     {
       "model_name": "Decision Tree",
-      "accuracy": 0.9536,
-      "f1_weighted": 0.9476,
-      "roc_auc": 0.8947,
-      "cv_mean": 0.9516,
-      "cv_std": 0.0051
+      "accuracy": 0.9622,
+      "f1_weighted": 0.9554,
+      "precision_weighted": 0.9514,
+      "recall_weighted": 0.9622,
+      "roc_auc": 0.9151,
+      "train_time": 0.0601,
+      "predict_time": 0.000341,
+      "cv_mean": 0.9477,
+      "cv_std": 0.0059
     },
     {
       "model_name": "Random Forest",
-      "accuracy": 0.9587,
-      "f1_weighted": 0.9517,
-      "roc_auc": 0.8903,
-      "cv_mean": 0.9583,
-      "cv_std": 0.0052
+      "accuracy": 0.9647,
+      "f1_weighted": 0.957,
+      "precision_weighted": 0.9558,
+      "recall_weighted": 0.9647,
+      "roc_auc": 0.9283,
+      "train_time": 0.2533,
+      "predict_time": 0.052736,
+      "cv_mean": 0.9561,
+      "cv_std": 0.0039
     },
     {
       "model_name": "XGBoost",
-      "accuracy": 0.9536,
-      "f1_weighted": 0.9462,
-      "roc_auc": 0.9152,
-      "cv_mean": 0.957,
-      "cv_std": 0.0049
+      "accuracy": 0.9656,
+      "f1_weighted": 0.9588,
+      "precision_weighted": 0.9559,
+      "recall_weighted": 0.9656,
+      "roc_auc": 0.9193,
+      "train_time": 1.0412,
+      "predict_time": 0.004662,
+      "cv_mean": 0.955,
+      "cv_std": 0.0031
+    },
+    {
+      "model_name": "ANN (Deep Learning)",
+      "accuracy": 0.9501,
+      "f1_weighted": 0.942,
+      "precision_weighted": 0.9393,
+      "recall_weighted": 0.9501,
+      "roc_auc": 0.9193,
+      "train_time": 26.6713,
+      "predict_time": 0.039596,
+      "cv_mean": null,
+      "cv_std": null
+    }
+  ],
+  "ann_trained_at": "2026-07-15T11:48:56.252703",
+  "best_model_overall": "Random Forest",
+  "best_model_type": "ML",
+  "comparison_generated_at": "2026-07-15T11:49:24.739403",
+  "full_comparison": [
+    {
+      "Model": "Random Forest",
+      "Type": "ML",
+      "Accuracy": 0.9647,
+      "Precision": 0.9558,
+      "Recall": 0.9647,
+      "F1 (Weighted)": 0.957,
+      "ROC AUC": 0.9283,
+      "CV Mean": 0.9561,
+      "CV Std": 0.0039,
+      "Train Time (s)": 0.2533,
+      "Predict Time (s)": 0.052736
+    },
+    {
+      "Model": "ANN (Deep Learning)",
+      "Type": "DL",
+      "Accuracy": 0.9501,
+      "Precision": 0.9393,
+      "Recall": 0.9501,
+      "F1 (Weighted)": 0.942,
+      "ROC AUC": 0.9193,
+      "CV Mean": NaN,
+      "CV Std": NaN,
+      "Train Time (s)": 26.6713,
+      "Predict Time (s)": 0.005078
+    },
+    {
+      "Model": "XGBoost",
+      "Type": "ML",
+      "Accuracy": 0.9656,
+      "Precision": 0.9559,
+      "Recall": 0.9656,
+      "F1 (Weighted)": 0.9588,
+      "ROC AUC": 0.9193,
+      "CV Mean": 0.955,
+      "CV Std": 0.0031,
+      "Train Time (s)": 1.0412,
+      "Predict Time (s)": 0.004662
+    },
+    {
+      "Model": "Decision Tree",
+      "Type": "ML",
+      "Accuracy": 0.9622,
+      "Precision": 0.9514,
+      "Recall": 0.9622,
+      "F1 (Weighted)": 0.9554,
+      "ROC AUC": 0.9151,
+      "CV Mean": 0.9477,
+      "CV Std": 0.0059,
+      "Train Time (s)": 0.0601,
+      "Predict Time (s)": 0.000341
+    },
+    {
+      "Model": "Logistic Regression",
+      "Type": "ML",
+      "Accuracy": 0.945,
+      "Precision": 0.9193,
+      "Recall": 0.945,
+      "F1 (Weighted)": 0.9312,
+      "ROC AUC": 0.9111,
+      "CV Mean": 0.932,
+      "CV Std": 0.0073,
+      "Train Time (s)": 0.0426,
+      "Predict Time (s)": 0.000276
     }
   ]
 }

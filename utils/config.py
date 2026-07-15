@@ -36,8 +36,23 @@ HEALTH_IMPACT_MODEL_PATH = HEALTH_IMPACT_MODEL_DIR / "best_model.pkl"
 HEALTH_IMPACT_SCALER_PATH = HEALTH_IMPACT_MODEL_DIR / "scaler.pkl"
 HEALTH_IMPACT_ENCODER_PATH = HEALTH_IMPACT_MODEL_DIR / "label_encoder.pkl"
 
+# ANN-specific artifacts — separate from the ML pipeline so existing pkl files
+# are never overwritten by a deep-learning training run.
+HEALTH_IMPACT_ANN_PATH = HEALTH_IMPACT_MODEL_DIR / "health_impact_ann.pt"
+HEALTH_IMPACT_ANN_HISTORY_PATH = HEALTH_IMPACT_MODEL_DIR / "ann_history.json"
+HEALTH_IMPACT_ANN_PREPROCESSOR_PATH = HEALTH_IMPACT_MODEL_DIR / "ann_preprocessor.pkl"
+# Architecture config saved alongside .pt so inference can reconstruct the model
+HEALTH_IMPACT_ANN_CONFIG_PATH = HEALTH_IMPACT_MODEL_DIR / "ann_config.json"
+
 AIR_QUALITY_MODEL_PATH = AIR_QUALITY_MODEL_DIR / "prediction_model.pkl"
 AIR_QUALITY_SCALER_PATH = AIR_QUALITY_MODEL_DIR / "scaler.pkl"
+
+# LSTM-specific artifacts — separate from ML pipeline; ML scaler.pkl is never overwritten
+AIR_QUALITY_LSTM_MODEL_PATH   = AIR_QUALITY_MODEL_DIR / "air_quality_lstm.pt"
+AIR_QUALITY_LSTM_SCALER_PATH  = AIR_QUALITY_MODEL_DIR / "lstm_scaler.pkl"
+AIR_QUALITY_LSTM_CONFIG_PATH  = AIR_QUALITY_MODEL_DIR / "lstm_config.json"
+AIR_QUALITY_LSTM_HISTORY_PATH = AIR_QUALITY_MODEL_DIR / "lstm_history.json"
+LSTM_LOOK_BACK = 24  # default sliding-window length (hours); configurable
 
 # ─── Dataset 1: City Type Classification ──────────────────────────────────────
 CITY_TYPE_FEATURES = ["CO", "NO2", "SO2", "O3", "PM2.5", "PM10"]
@@ -73,9 +88,9 @@ HEALTH_IMPACT_CLASSES_NUMERIC = {
 }
 # Map numeric class to human-readable label for display
 HEALTH_IMPACT_CLASS_DISPLAY = {
-    0: "Low", 1: "Moderate", 2: "High", 3: "Severe", 4: "Very High",
-    "0.0": "Low", "1.0": "Moderate", "2.0": "High", "3.0": "Severe", "4.0": "Very High",
-    "0": "Low", "1": "Moderate", "2": "High", "3": "Severe", "4": "Very High",
+    2: "Low", 1: "Moderate", 3: "High", 4: "Severe", 0: "Very High",
+    "2.0": "Low", "1.0": "Moderate", "3.0": "High", "4.0": "Severe", "0.0": "Very High",
+    "2": "Low", "1": "Moderate", "3": "High", "4": "Severe", "0": "Very High",
 }
 
 # ─── Dataset 3: Air Quality Time Series (UCI) ─────────────────────────────────
@@ -156,4 +171,5 @@ MODEL_DISPLAY_NAMES = {
     "XGBClassifier": "XGBoost",
     "XGBRegressor": "XGBoost Regressor",
     "RandomForestRegressor": "Random Forest Regressor",
+    "ANNClassifier": "ANN (Deep Learning)",
 }

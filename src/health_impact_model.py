@@ -10,6 +10,7 @@ import sys
 import os
 import logging
 import json
+import time
 from pathlib import Path
 from datetime import datetime
 
@@ -119,9 +120,13 @@ def train_health_impact_model():
             y_tr = y_train_enc
             y_te = y_test_enc
 
+        t0_train = time.time()
         model.fit(X_train_proc, y_tr)
+        train_time = round(time.time() - t0_train, 4)
 
+        t0_pred = time.time()
         y_pred = model.predict(X_test_proc)
+        predict_time = round(time.time() - t0_pred, 6)
         y_proba = model.predict_proba(X_test_proc) if hasattr(model, "predict_proba") else None
 
         metrics = evaluate_classifier(y_te, y_pred, y_proba, class_names=class_names)
@@ -134,7 +139,11 @@ def train_health_impact_model():
             "model_obj": model,
             "accuracy": metrics["accuracy"],
             "f1_weighted": metrics["f1_weighted"],
+            "precision_weighted": metrics["precision_weighted"],
+            "recall_weighted": metrics["recall_weighted"],
             "roc_auc": metrics["roc_auc"] or 0.0,
+            "train_time": train_time,
+            "predict_time": predict_time,
             "cv_mean": round(float(cv_scores.mean()), 4),
             "cv_std": round(float(cv_scores.std()), 4),
             "is_xgb": "XGB" in type(model).__name__,
@@ -171,7 +180,10 @@ def train_health_impact_model():
         "best_model": best["model_name"],
         "class_labels": class_names,
         "comparison": [
-            {k: v for k, v in r.items() if k not in ["model_obj", "is_xgb"]}
+            {
+                k: v for k, v in r.items()
+                if k not in ["model_obj", "is_xgb"]
+            }
             for r in results
         ],
     }

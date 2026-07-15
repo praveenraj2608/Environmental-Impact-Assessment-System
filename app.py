@@ -93,38 +93,100 @@ def load_all_datasets():
 # ─── Sidebar ─────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
-    <div style='text-align:center; padding: 1rem 0;'>
-        <div style='font-size:3rem;'>🌍</div>
-        <div style='font-size:1.1rem; font-weight:700; color:#00d4aa;'>
-            Env Impact Assessment
-        </div>
-        <div style='font-size:0.75rem; color:#94a3b8; margin-top:0.25rem;'>
-            Data Science ML Project
-        </div>
+    <style>
+    .sidebar-brand {
+        text-align: center;
+        padding: 1.5rem 0.5rem 1rem;
+    }
+    .brand-icon {
+        font-size: 3.5rem;
+        filter: drop-shadow(0 0 18px rgba(6,182,212,0.6));
+        animation: orbFloat 5s ease-in-out infinite;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    .brand-name {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        background: linear-gradient(135deg, #60a5fa, #22d3ee);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 0.01em;
+    }
+    .brand-sub {
+        font-size: 0.72rem;
+        color: #64748b;
+        margin-top: 0.2rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+    .status-pill {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.45rem 0.75rem;
+        border-radius: 8px;
+        margin: 0.25rem 0;
+        background: rgba(17,24,39,0.6);
+        border: 1px solid rgba(255,255,255,0.06);
+        font-size: 0.82rem;
+        transition: border-color 0.2s;
+    }
+    .status-pill:hover { border-color: rgba(6,182,212,0.25); }
+    .dot-ready   { width:8px; height:8px; border-radius:50%; background:#10b981; box-shadow: 0 0 6px #10b981; flex-shrink:0; }
+    .dot-missing { width:8px; height:8px; border-radius:50%; background:#ef4444; box-shadow: 0 0 6px #ef4444; flex-shrink:0; }
+    .dot-warn    { width:8px; height:8px; border-radius:50%; background:#f59e0b; box-shadow: 0 0 6px #f59e0b; flex-shrink:0; }
+    .pill-name { color: #e2e8f0; font-weight: 500; flex: 1; }
+    .pill-status { font-size: 0.72rem; color: #64748b; }
+    .sidebar-section-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #475569;
+        padding: 0.25rem 0.25rem 0.5rem;
+        margin-top: 0.5rem;
+    }
+    .sidebar-footer {
+        text-align: center;
+        padding: 0.75rem 0;
+        font-size: 0.7rem;
+        color: #334155;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        margin-top: 0.5rem;
+    }
+    </style>
+    <div class="sidebar-brand">
+        <span class="brand-icon">🌍</span>
+        <div class="brand-name">EIA System</div>
+        <div class="brand-sub">Environmental · AI · Analytics</div>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("---")
+    st.markdown('<div class="sidebar-section-label">🤖 Model Status</div>', unsafe_allow_html=True)
 
-    # Model status indicators
-    st.markdown("### 🤖 Model Status")
     from utils.model_utils import check_models_exist
     model_status = check_models_exist()
 
     status_items = [
         ("City Type RF", model_status.get("city_type_model")),
         ("Health Impact", model_status.get("health_impact_model")),
-        ("Air Quality Pred", model_status.get("air_quality_model")),
+        ("Air Quality", model_status.get("air_quality_model")),
     ]
     for name, ready in status_items:
-        icon = "🟢" if ready else "🔴"
-        status = "Ready" if ready else "Not trained"
-        st.markdown(f"{icon} **{name}**: {status}")
+        dot_class = "dot-ready" if ready else "dot-missing"
+        status_text = "Ready" if ready else "Not trained"
+        st.markdown(f"""
+        <div class="status-pill">
+            <span class="{dot_class}"></span>
+            <span class="pill-name">{name}</span>
+            <span class="pill-status">{status_text}</span>
+        </div>""", unsafe_allow_html=True)
 
-    st.markdown("---")
+    st.markdown('<div class="sidebar-section-label">📁 Datasets</div>', unsafe_allow_html=True)
 
-    # Dataset status
-    st.markdown("### 📁 Dataset Status")
     from utils.config import CITY_TYPES_CSV, HEALTH_IMPACT_CSV, AIR_QUALITY_CSV
     datasets = [
         ("City Types", CITY_TYPES_CSV),
@@ -132,45 +194,64 @@ with st.sidebar:
         ("UCI Air Quality", AIR_QUALITY_CSV),
     ]
     for name, path in datasets:
-        icon = "✅" if path.exists() else "❌"
-        st.markdown(f"{icon} {name}")
+        exists = path.exists()
+        dot_class = "dot-ready" if exists else "dot-missing"
+        status_text = "Found" if exists else "Missing"
+        st.markdown(f"""
+        <div class="status-pill">
+            <span class="{dot_class}"></span>
+            <span class="pill-name">{name}</span>
+            <span class="pill-status">{status_text}</span>
+        </div>""", unsafe_allow_html=True)
 
-    st.markdown("---")
-    st.markdown(
-        "<div style='color:#94a3b8; font-size:0.75rem; text-align:center;'>"
-        "v1.0 · July 2026<br>"
-        "⚠️ Not for medical use"
-        "</div>",
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    <div class="sidebar-footer">
+        v1.0 &nbsp;·&nbsp; July 2026<br>
+        <span style="color:#1e3a5f">⚠️ Not for medical use</span>
+    </div>
+    """, unsafe_allow_html=True)
 
 
-# ─── Redirect to Home ────────────────────────────────────────────────────────
-# app.py is the entry point; Streamlit auto-discovers pages/
-# This page redirects users to the Home page content
 
+
+# ─── App Entry Page ─────────────────────────────────────────────────────────
 st.markdown("""
-<div style='text-align:center; padding: 4rem 2rem;'>
-    <div style='font-size:5rem;'>🌍</div>
-    <h1 style='background:linear-gradient(135deg,#00d4aa,#7c3aed);
-               -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-               font-size:2.5rem; margin:1rem 0;'>
+<div style="text-align:center; padding: 4rem 2rem 2rem;">
+    <div style="font-size:5rem; filter:drop-shadow(0 0 30px rgba(6,182,212,0.5));
+                animation: orbFloat 5s ease-in-out infinite; display:inline-block;">🌍</div>
+    <h1 style="font-family:'Outfit',sans-serif; font-weight:800;
+               background: linear-gradient(135deg,#93c5fd,#22d3ee,#a5f3fc);
+               -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+               background-clip:text; font-size:2.6rem; margin:1rem 0; letter-spacing:-0.03em;">
         Environmental Impact Assessment System
     </h1>
-    <p style='color:#94a3b8; font-size:1.1rem; max-width:600px; margin:0 auto;'>
-        Navigate using the <b>sidebar</b> to explore datasets, run predictions, 
-        and generate environmental reports.
+    <p style="color:#94a3b8; font-size:1.05rem; max-width:640px; margin:0 auto 2rem; line-height:1.7;">
+        An AI-powered platform for analysing air quality data, predicting health impacts,
+        and computing environmental risk scores. Use the <strong style="color:#22d3ee;">sidebar</strong>
+        to navigate between the 8 interactive modules.
     </p>
 </div>
 """, unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
-with col1:
-    st.info("**🏠 Start Here**\nVisit the Home page for an overview")
-with col2:
-    st.info("**🏭 Predict**\nUse City Type or Health Impact prediction pages")
-with col3:
-    st.info("**📋 Report**\nGenerate a full Environmental Impact Report")
+quickstart = [
+    (col1, "🏠", "Start on Home", "Get a full project overview with live model status and dataset summaries.", "#60a5fa"),
+    (col2, "🏭", "Run Predictions", "Enter pollutant values to classify city areas or predict health risks.", "#34d399"),
+    (col3, "📋", "Generate Report", "Synthesise all predictions into a professional environmental report.", "#f59e0b"),
+]
+for col, icon, title, desc, color in quickstart:
+    with col:
+        st.markdown(f"""
+        <div style="background:rgba(17,24,39,0.7); border:1px solid rgba(255,255,255,0.07);
+                    border-top:3px solid {color}; border-radius:14px; padding:1.4rem 1.25rem;
+                    text-align:center; transition:all 0.25s ease;">
+            <div style="font-size:2.2rem; margin-bottom:0.6rem;">{icon}</div>
+            <div style="font-family:'Outfit',sans-serif; font-weight:700; font-size:1rem;
+                        color:{color}; margin-bottom:0.4rem;">{title}</div>
+            <div style="color:#64748b; font-size:0.83rem; line-height:1.5;">{desc}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
 
 # Pre-load models in background so pages feel instant
 try:

@@ -71,7 +71,7 @@ with st.expander("⚙️ Recommendation Settings", expanded=not has_assessment):
         pl_default = st.session_state.get("assessment", {}).get("pollution_level", 100.0)
         pollution_level = st.number_input("Pollution Level", 0.0, 500.0, float(pl_default), 1.0)
 
-generate_btn = st.button("💡 Generate Recommendations", use_container_width=True)
+generate_btn = st.button("💡 Generate Recommendations", width='stretch')
 
 # ─── Generate on load if from session, or on button click ─────────────────────
 run_generation = generate_btn or has_assessment

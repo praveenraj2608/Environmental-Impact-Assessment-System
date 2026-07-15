@@ -62,11 +62,11 @@ with tab1:
             st.markdown("#### Class Distribution")
             class_dist = df_ct[CITY_TYPE_TARGET].value_counts()
             fig = plot_class_distribution(class_dist, "City Type Distribution")
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
         with col_right:
             st.markdown("#### Summary Statistics")
-            st.dataframe(df_ct[CITY_TYPE_FEATURES].describe().round(2), use_container_width=True)
+            st.dataframe(df_ct[CITY_TYPE_FEATURES].describe().round(2), width='stretch')
 
         st.markdown("#### Pollutant Distributions by City Type")
         fig_box = px.box(
@@ -77,15 +77,15 @@ with tab1:
             template="plotly_dark",
         )
         fig_box.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(30,41,59,0.6)")
-        st.plotly_chart(fig_box, use_container_width=True)
+        st.plotly_chart(fig_box, width='stretch')
 
         st.markdown("#### Correlation Heatmap")
         numeric_df = df_ct[CITY_TYPE_FEATURES].copy()
         numeric_df["Type_encoded"] = (df_ct[CITY_TYPE_TARGET] == "Industrial").astype(int)
-        st.plotly_chart(plot_correlation_heatmap(numeric_df, "Pollutant Correlations"), use_container_width=True)
+        st.plotly_chart(plot_correlation_heatmap(numeric_df, "Pollutant Correlations"), width='stretch')
 
         st.markdown("#### Raw Data Sample (first 100 rows)")
-        st.dataframe(df_ct.head(100), use_container_width=True)
+        st.dataframe(df_ct.head(100), width='stretch')
 
     except FileNotFoundError as e:
         st.error(f"Dataset not found: {e}")
@@ -112,7 +112,7 @@ with tab2:
             st.markdown("#### Health Impact Class Distribution")
             hi_dist = df_hi[HEALTH_IMPACT_TARGET].value_counts()
             fig_hi = plot_class_distribution(hi_dist, "Health Impact Class Distribution")
-            st.plotly_chart(fig_hi, use_container_width=True)
+            st.plotly_chart(fig_hi, width='stretch')
 
         with col_right:
             st.markdown("#### Missing Values Analysis")
@@ -121,7 +121,7 @@ with tab2:
                 st.dataframe(
                     missing[missing > 0].rename("Missing Count").to_frame()
                     .assign(Percentage=lambda x: (x["Missing Count"] / len(df_hi) * 100).round(2)),
-                    use_container_width=True,
+                    width='stretch',
                 )
             else:
                 st.success("✅ No missing values detected!")
@@ -138,13 +138,13 @@ with tab2:
                 color_discrete_sequence=["#00d4aa"],
             )
             fig_hist.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(30,41,59,0.6)")
-            st.plotly_chart(fig_hist, use_container_width=True)
+            st.plotly_chart(fig_hist, width='stretch')
 
         st.markdown("#### Correlation Heatmap")
         st.plotly_chart(
             plot_correlation_heatmap(df_hi.select_dtypes(include=[np.number]).drop(columns=["RecordID"], errors="ignore"),
                                      "Health Impact Correlations"),
-            use_container_width=True
+            width='stretch'
         )
 
     except FileNotFoundError as e:
@@ -183,7 +183,7 @@ with tab3:
                 title=f"{target_col} Over Time",
                 add_moving_avg=True,
             )
-            st.plotly_chart(fig_ts, use_container_width=True)
+            st.plotly_chart(fig_ts, width='stretch')
 
         # Monthly distribution
         if "DateTime" in df_aq.columns and target_col in df_aq.columns:
@@ -201,16 +201,16 @@ with tab3:
             fig_monthly.update_layout(
                 paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(30,41,59,0.6)"
             )
-            st.plotly_chart(fig_monthly, use_container_width=True)
+            st.plotly_chart(fig_monthly, width='stretch')
 
         # Numeric col distributions
         numeric_cols = [c for c in df_aq.select_dtypes(include=[np.number]).columns][:6]
         if numeric_cols:
             st.markdown("#### Sensor Reading Distributions")
-            st.plotly_chart(plot_pollutant_distributions(df_aq, numeric_cols), use_container_width=True)
+            st.plotly_chart(plot_pollutant_distributions(df_aq, numeric_cols), width='stretch')
 
         st.markdown("#### Raw Data Sample")
-        st.dataframe(df_aq.head(50), use_container_width=True)
+        st.dataframe(df_aq.head(50), width='stretch')
 
     except FileNotFoundError as e:
         st.error(f"Dataset not found: {e}")

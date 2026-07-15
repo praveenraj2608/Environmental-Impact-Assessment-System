@@ -129,7 +129,7 @@ with st.expander("📥 Report Configuration", expanded=not has_assessment):
         )
 
 # ─── Generate Report Button ────────────────────────────────────────────────────
-gen_btn = st.button("📋 Generate Environmental Report", use_container_width=True)
+gen_btn = st.button("📋 Generate Environmental Report", width='stretch')
 
 if gen_btn:
     # Ensure mitigation recommendations are included
@@ -185,7 +185,7 @@ if gen_btn:
             data=report_text,
             file_name=f"environmental_report_{timestamp}.md",
             mime="text/markdown",
-            use_container_width=True,
+            width='stretch',
         )
 
     # Text download
@@ -198,7 +198,7 @@ if gen_btn:
             data=plain,
             file_name=f"environmental_report_{timestamp}.txt",
             mime="text/plain",
-            use_container_width=True,
+            width='stretch',
         )
 
     # HTML download
@@ -227,7 +227,7 @@ if gen_btn:
             data=html_report,
             file_name=f"environmental_report_{timestamp}.html",
             mime="text/html",
-            use_container_width=True,
+            width='stretch',
         )
 
     # Save to reports directory

@@ -21,14 +21,78 @@ if css_path.exists():
     with open(css_path) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# ─── Header ──────────────────────────────────────────────────────────────────
+
+# ─── Animated Hero Header ────────────────────────────────────────────────────
 st.markdown("""
-<div class='page-header'>
-    <div style='font-size:4rem; margin-bottom:0.5rem;'>🌍</div>
-    <h1 class='page-title'>Environmental Impact Assessment System</h1>
-    <p class='page-subtitle'>
-        AI-powered air pollution analysis · Health impact prediction · Environmental risk scoring
-    </p>
+<style>
+.hero-wrapper {
+    position: relative;
+    background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(6,182,212,0.05) 100%);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 24px;
+    padding: 3rem 2rem 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    overflow: hidden;
+}
+.hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    animation: orbFloat 7s ease-in-out infinite;
+}
+.orb-1 { width: 280px; height: 280px; background: rgba(37,99,235,0.18); top:-100px; left:-80px; }
+.orb-2 { width: 220px; height: 220px; background: rgba(6,182,212,0.14); bottom:-80px; right:-60px; animation-delay:-3.5s; }
+.orb-3 { width: 140px; height: 140px; background: rgba(99,102,241,0.12); top:30px; right:15%; animation-delay:-1.5s; }
+.hero-globe { font-size: 4.5rem; line-height: 1; margin-bottom: 1rem; filter: drop-shadow(0 0 30px rgba(6,182,212,0.5)); animation: orbFloat 5s ease-in-out infinite; }
+.hero-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 2.8rem;
+    background: linear-gradient(135deg, #93c5fd 0%, #22d3ee 50%, #a5f3fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+.hero-subtitle {
+    color: #94a3b8;
+    font-size: 1.05rem;
+    margin: 0 0 1.5rem;
+    letter-spacing: 0.01em;
+}
+.hero-badges { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid;
+    letter-spacing: 0.03em;
+    backdrop-filter: blur(6px);
+}
+.badge-blue  { background: rgba(37,99,235,0.15);  border-color: rgba(37,99,235,0.4);  color: #93c5fd; }
+.badge-cyan  { background: rgba(6,182,212,0.15);  border-color: rgba(6,182,212,0.4);  color: #67e8f9; }
+.badge-indigo{ background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4); color: #c7d2fe; }
+.badge-green { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); color: #6ee7b7; }
+</style>
+<div class="hero-wrapper">
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+    <div class="hero-orb orb-3"></div>
+    <div class="hero-globe">🌍</div>
+    <h1 class="hero-title">Environmental Impact Assessment System</h1>
+    <p class="hero-subtitle">AI-powered air pollution analysis &nbsp;·&nbsp; Health impact prediction &nbsp;·&nbsp; Environmental risk scoring</p>
+    <div class="hero-badges">
+        <span class="hero-badge badge-blue">🤖 Machine Learning</span>
+        <span class="hero-badge badge-cyan">📊 3 Real Datasets</span>
+        <span class="hero-badge badge-indigo">🏭 City Classification</span>
+        <span class="hero-badge badge-green">🫁 Health Prediction</span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -51,22 +115,24 @@ except Exception:
     pass
 
 metrics = [
-    (m1, "🤖", "3", "ML Models"),
-    (m2, "📊", "3", "Datasets"),
-    (m3, "📄", "8", "App Pages"),
-    (m4, "🎯", best_accuracy, "Best Model Accuracy"),
+    (m1, "🤖", "3", "ML Models", "#60a5fa"),
+    (m2, "📊", "3", "Datasets", "#34d399"),
+    (m3, "📄", "8", "App Pages", "#a78bfa"),
+    (m4, "🎯", best_accuracy, "Best Accuracy", "#f59e0b"),
 ]
-for col, icon, value, label in metrics:
+for col, icon, value, label, color in metrics:
     with col:
         st.markdown(f"""
         <div class='metric-card'>
-            <div style='font-size:2rem; margin-bottom:0.5rem;'>{icon}</div>
-            <div class='metric-value'>{value}</div>
-            <div class='metric-label'>{label}</div>
+            <div style='font-size:2rem; margin-bottom:0.4rem;'>{icon}</div>
+            <div style='font-family:"Outfit",sans-serif; font-size:2.2rem; font-weight:700;
+                        color:{color}; line-height:1;'>{value}</div>
+            <div class='metric-label' style='margin-top:0.4rem;'>{label}</div>
         </div>
         """, unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
+
 
 # ─── Model Status & Quick Nav ─────────────────────────────────────────────────
 col_left, col_right = st.columns([1, 1])
@@ -84,7 +150,7 @@ with col_left:
     <br>
     <span style='color:#7c3aed; font-weight:bold;'>ML MODEL LAYER</span><br>
     ├── 🏭 Random Forest → City Type (Industrial/Residential)<br>
-    ├── 🫁 XGBoost → Health Impact Classification<br>
+    ├── 🫁 XGBoost / ANN (Deep Learning) → Health Impact Classification<br>
     └── 📈 XGBoost Regressor → Pollution Forecasting<br>
     <br>
     <span style='color:#f59e0b; font-weight:bold;'>ASSESSMENT ENGINE</span><br>
@@ -190,21 +256,24 @@ except Exception:
     pass
 
 perf_data = {
-    "Model": ["City Type (Random Forest)", "Health Impact (Best Model)", "Air Quality (Regressor)"],
-    "Task": ["Binary Classification", "Multi-class Classification", "Regression"],
+    "Model": ["City Type (Random Forest)", "Health Impact (Best ML Model)", "Health Impact (ANN)", "Air Quality (Regressor)"],
+    "Task": ["Binary Classification", "Multi-class Classification", "Multi-class Classification", "Regression"],
     "Algorithm": [
         ct_metrics.get("model", "Random Forest"),
         hi_metrics.get("best_model", "XGBoost"),
+        "ANN (Deep Learning)",
         aq_metrics.get("best_model", "XGBoost"),
     ],
     "Key Metric": [
         f"{ct_metrics.get('test_accuracy', 0.9899)*100:.2f}% accuracy" if ct_metrics else "~98.99% accuracy",
         f"{hi_metrics.get('comparison', [{}])[0].get('roc_auc', 'N/A')} ROC-AUC" if hi_metrics else "See logs",
+        "See comparison table in Health Impact page",
         f"R² = {aq_metrics.get('best_metrics', {}).get('r2', 'N/A')}" if aq_metrics else "See logs",
     ],
     "Status": [
         "✅ Ready" if model_status.get("city_type_model") else "⏳ Train required",
         "✅ Ready" if model_status.get("health_impact_model") else "⏳ Train required",
+        "✅ Ready" if model_status.get("health_impact_ann") else "⏳ Train required",
         "✅ Ready" if model_status.get("air_quality_model") else "⏳ Train required",
     ],
 }
@@ -212,7 +281,7 @@ perf_data = {
 import pandas as pd
 st.dataframe(
     pd.DataFrame(perf_data),
-    use_container_width=True,
+    width='stretch',
     hide_index=True,
 )
 

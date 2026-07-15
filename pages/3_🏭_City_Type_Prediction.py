@@ -85,8 +85,8 @@ with preset_col1:
 with preset_col2:
     if st.button("🏘️ Load Residential Example"):
         st.session_state.update({
-            "co_val": 0.8, "no2_val": 25.0, "so2_val": 10.0,
-            "o3_val": 50.0, "pm25_val": 12.0, "pm10_val": 25.0
+            "co_val": 0.1, "no2_val": 5.0, "so2_val": 2.0,
+            "o3_val": 20.0, "pm25_val": 5.0, "pm10_val": 10.0
         })
 with preset_col3:
     if st.button("🔄 Reset Values"):
@@ -119,7 +119,7 @@ for col, feat, key, label, min_v, max_v, default in fields:
         )
 
 st.markdown("<br>", unsafe_allow_html=True)
-predict_btn = st.button("🔍 Predict City Type", disabled=not model_ready, use_container_width=True)
+predict_btn = st.button("🔍 Predict City Type", disabled=not model_ready, width='stretch')
 
 # ─── Prediction ────────────────────────────────────────────────────────────────
 if predict_btn and model_ready:
@@ -170,7 +170,7 @@ if predict_btn and model_ready:
         with r2:
             st.plotly_chart(
                 plot_prediction_probabilities(proba, class_names),
-                use_container_width=True
+                width='stretch'
             )
 
         st.markdown("---")
@@ -182,7 +182,7 @@ if predict_btn and model_ready:
             if not importance_df.empty:
                 st.plotly_chart(
                     plot_feature_importance(importance_df, top_n=6),
-                    use_container_width=True
+                    width='stretch'
                 )
 
         with interp_col:

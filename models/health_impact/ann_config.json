@@ -1,0 +1,28 @@
+{
+  "input_dim": 13,
+  "num_classes": 5,
+  "feature_names": [
+    "AQI",
+    "PM10",
+    "PM2_5",
+    "NO2",
+    "SO2",
+    "O3",
+    "Temperature",
+    "Humidity",
+    "WindSpeed",
+    "RespiratoryCases",
+    "CardiovascularCases",
+    "HospitalAdmissions",
+    "HealthImpactScore"
+  ],
+  "class_names": [
+    "High",
+    "Low",
+    "Moderate",
+    "Severe",
+    "Very High"
+  ],
+  "train_time_seconds": 26.6713,
+  "predict_time_seconds": 0.039596
+}

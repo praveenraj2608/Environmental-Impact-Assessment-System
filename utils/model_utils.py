@@ -64,6 +64,79 @@ def load_model(path: Path, description: str = "model") -> Optional[Any]:
         return None
 
 
+def load_ann_model(ann_path: Path, config_path: Path) -> Optional[Any]:
+    """
+    Load a PyTorch ANN model from saved state_dict and architecture config.
+
+    The config JSON (ann_config.json) must contain:
+        - ``input_dim``: int — number of input features
+        - ``num_classes``: int — number of output classes
+
+    Args:
+        ann_path: Path to the ``.pt`` state_dict file.
+        config_path: Path to the ``ann_config.json`` architecture file.
+
+    Returns:
+        Reconstructed PyTorch model in eval mode, or None on failure.
+    """
+    import json
+    if not ann_path.exists():
+        logger.warning(f"ANN weights not found at {ann_path}")
+        return None
+    if not config_path.exists():
+        logger.warning(f"ANN config not found at {config_path}")
+        return None
+    try:
+        import torch
+        # Read architecture parameters
+        with open(config_path, "r", encoding="utf-8") as fh:
+            cfg = json.load(fh)
+        input_dim: int = cfg["input_dim"]
+        num_classes: int = cfg["num_classes"]
+
+        # Reconstruct model (must match training architecture exactly)
+        from src.health_impact_dl_model import HealthImpactANN
+        model = HealthImpactANN(input_dim, num_classes)
+        state = torch.load(str(ann_path), map_location="cpu", weights_only=True)
+        model.load_state_dict(state)
+        model.eval()
+        logger.info(f"ANN loaded ← {ann_path}  (input_dim={input_dim}, classes={num_classes})")
+        return model
+    except Exception as e:
+        logger.error(f"Failed to load ANN model: {e}")
+        return None
+
+
+def predict_with_ann(
+    model: Any,
+    X: np.ndarray,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Run inference through a PyTorch ANN classifier.
+
+    Args:
+        model: Loaded PyTorch model in eval mode.
+        X: Scaled feature array of shape ``(n_samples, n_features)``.
+
+    Returns:
+        Tuple of ``(y_pred, y_proba)`` — integer class indices and probabilities.
+    """
+    try:
+        import torch
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        model.to(device)
+        model.eval()
+        with torch.no_grad():
+            inputs = torch.FloatTensor(X).to(device)
+            outputs = model(inputs)
+            y_proba = torch.softmax(outputs, dim=1).cpu().numpy()
+        y_pred = np.argmax(y_proba, axis=1)
+        return y_pred, y_proba
+    except Exception as e:
+        logger.error(f"ANN inference failed: {e}")
+        return np.array([]), np.array([])
+
+
 def safe_predict(model: Any, X: np.ndarray) -> Optional[np.ndarray]:
     """
     Run model.predict() with error catching.
@@ -213,6 +286,7 @@ def check_models_exist() -> Dict[str, bool]:
     from utils.config import (
         CITY_TYPE_MODEL_PATH, CITY_TYPE_SCALER_PATH, CITY_TYPE_ENCODER_PATH,
         HEALTH_IMPACT_MODEL_PATH, HEALTH_IMPACT_SCALER_PATH,
+        HEALTH_IMPACT_ANN_PATH, HEALTH_IMPACT_ANN_CONFIG_PATH,
         AIR_QUALITY_MODEL_PATH, AIR_QUALITY_SCALER_PATH,
     )
 
@@ -222,6 +296,8 @@ def check_models_exist() -> Dict[str, bool]:
         "city_type_encoder": CITY_TYPE_ENCODER_PATH.exists(),
         "health_impact_model": HEALTH_IMPACT_MODEL_PATH.exists(),
         "health_impact_scaler": HEALTH_IMPACT_SCALER_PATH.exists(),
+        "health_impact_ann": HEALTH_IMPACT_ANN_PATH.exists(),
+        "health_impact_ann_config": HEALTH_IMPACT_ANN_CONFIG_PATH.exists(),
         "air_quality_model": AIR_QUALITY_MODEL_PATH.exists(),
         "air_quality_scaler": AIR_QUALITY_SCALER_PATH.exists(),
     }

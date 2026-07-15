@@ -1,0 +1,4 @@
+Model,RMSE,MAE,MSE,MAPE (%),R²,Train Time (s),Predict Time (s)
+Random Forest,0.5329,0.3456,,26.89,0.8474,,
+XGBoost,0.5383,0.358,,28.61,0.8443,,
+LSTM (Deep Learning),0.822012,0.610515,0.675703,42.9861,0.636931,17.77,0.04662

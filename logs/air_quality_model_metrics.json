@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-12T15:20:49.614126",
+  "timestamp": "2026-07-15T11:48:58.295149",
   "target_col": "CO(GT)",
   "best_model": "Random Forest",
   "xgb_metrics": {
@@ -22,5 +22,80 @@
   },
   "n_features": 24,
   "train_size": 2858,
-  "test_size": 715
+  "test_size": 715,
+  "lstm_metrics": {
+    "rmse": 0.825685,
+    "mae": 0.61189,
+    "mse": 0.681755,
+    "mape": 43.3501,
+    "r2": 0.637215,
+    "train_time": 17.7744,
+    "predict_time": 0.014292
+  },
+  "lstm_target_col": "CO(GT)",
+  "lstm_feature_names": [
+    "PT08.S1(CO)",
+    "NMHC(GT)",
+    "C6H6(GT)",
+    "PT08.S2(NMHC)",
+    "NOx(GT)",
+    "PT08.S3(NOx)",
+    "NO2(GT)",
+    "PT08.S4(NO2)",
+    "PT08.S5(O3)",
+    "T",
+    "RH",
+    "AH",
+    "CO(GT)_lag_1",
+    "CO(GT)_lag_7",
+    "CO(GT)_lag_24",
+    "CO(GT)_roll_mean_24",
+    "CO(GT)_roll_max_24",
+    "CO(GT)_roll_min_24",
+    "CO(GT)_roll_mean_168",
+    "CO(GT)_roll_max_168",
+    "CO(GT)_roll_min_168",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "lstm_look_back": 24,
+  "lstm_trained_at": "2026-07-15T11:53:49.910117",
+  "best_model_overall": "Random Forest",
+  "best_model_type": "ML",
+  "full_comparison": [
+    {
+      "Model": "Random Forest",
+      "Type": "ML",
+      "RMSE": 0.5329,
+      "MAE": 0.3456,
+      "MSE": NaN,
+      "MAPE (%)": 26.89,
+      "R\u00b2": 0.8474,
+      "Train Time (s)": NaN,
+      "Predict Time (s)": NaN
+    },
+    {
+      "Model": "XGBoost",
+      "Type": "ML",
+      "RMSE": 0.5383,
+      "MAE": 0.358,
+      "MSE": NaN,
+      "MAPE (%)": 28.61,
+      "R\u00b2": 0.8443,
+      "Train Time (s)": NaN,
+      "Predict Time (s)": NaN
+    },
+    {
+      "Model": "LSTM (Deep Learning)",
+      "Type": "DL",
+      "RMSE": 0.822012,
+      "MAE": 0.610515,
+      "MSE": 0.675703,
+      "MAPE (%)": 42.9861,
+      "R\u00b2": 0.636931,
+      "Train Time (s)": 17.77,
+      "Predict Time (s)": 0.04662
+    }
+  ]
 }

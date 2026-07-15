@@ -86,7 +86,7 @@ with st.expander("📥 Configure Assessment Inputs", expanded=True):
             index=["improving", "stable", "worsening"].index(trend_default),
         )
 
-assess_btn = st.button("🔍 Compute Environmental Risk Score", use_container_width=True)
+assess_btn = st.button("🔍 Compute Environmental Risk Score", width='stretch')
 
 # ─── Assessment Results ────────────────────────────────────────────────────────
 if assess_btn:
@@ -116,10 +116,10 @@ if assess_btn:
     g1, g2 = st.columns([1, 1])
 
     with g1:
-        st.plotly_chart(plot_risk_gauge(risk_score, risk_level), use_container_width=True)
+        st.plotly_chart(plot_risk_gauge(risk_score, risk_level), width='stretch')
 
     with g2:
-        st.plotly_chart(plot_risk_factor_breakdown(factors), use_container_width=True)
+        st.plotly_chart(plot_risk_factor_breakdown(factors), width='stretch')
 
     # ── Summary Cards ──────────────────────────────────────────────────────
     st.markdown("### 📊 Assessment Summary")
